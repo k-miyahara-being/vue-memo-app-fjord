@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{$data}}
     <h1>メモアプリ</h1>
     <ul>
       <li v-for="(memo, index) in memos" :key="memo.content">
@@ -13,8 +12,12 @@
         </span>
       </li>
       <li><a class="plus" href="#" @click.prevent="add_memo()">+</a></li>
+      <span v-if="edit==memos.length">
+        <textarea v-model="editmemo"></textarea>
+        <button class="edit_btn" @click="change_memo(memos.length - 1)">編集</button>
+        <button class="delete_btn" @click="delete_memo(memos.length - 1)">削除</button>
+      </span>
     </ul>
-
   </div>
 </template>
 
@@ -38,6 +41,7 @@ export default {
         firstline: this.newmemo
       })
       this.save_memo()
+      this.edit_memo(this.memos.length - 1)
     },
     edit_memo (index) {
       this.edit = index
